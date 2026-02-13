@@ -628,7 +628,7 @@
                 }
                 if (img.endsWith('.mp4')) {
                     return `
-                        <video controls autoplay loop muted playsinline class="w-full h-48 object-cover rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4">
+                        <video controls autoplay loop muted playsinline class="w-full aspect-video object-cover rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4">
                             <source src="${img}" type="video/mp4">
                         </video>
                     `;
