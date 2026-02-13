@@ -628,7 +628,7 @@
                     const fullUrl = window.location.origin + '/' + img;
                     return `
                         <div class="w-full h-[500px] rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4 overflow-hidden relative">
-                             <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(fullUrl)}" width="100%" height="100%" frameborder="0">
+                             <iframe src="https://docs.google.com/viewer?url=${encodeURIComponent(fullUrl)}&embedded=true" width="100%" height="100%" frameborder="0">
                              </iframe>
                         </div>
                     `;
