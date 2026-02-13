@@ -1,7 +1,7 @@
 # Waheed Abdulbaki Shurbaji - Portfolio
 
 ## Overview
-This is a personal portfolio website for Waheed Abdulbaki Shurbaji, a Medical Informatics student at the University of Lübeck. The website showcases skills, experience, and projects in a modern, responsive interface.
+This is a personal portfolio website for me.The website showcases skills, experience, and projects in a modern, responsive interface.
 
 ## Features
 -   **Multi-language Support**: Fully localized in German (DE), English (EN), and Arabic (AR) with RTL support.
