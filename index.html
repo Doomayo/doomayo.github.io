@@ -227,6 +227,18 @@
             <div id="projectModalContent" class="p-0"></div>
         </div>
     </div>
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal"
+        class="hidden fixed inset-0 z-[150] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 transition-opacity duration-300"
+        onclick="if(event.target === this) closeLightbox()">
+        <button onclick="closeLightbox()"
+            class="absolute top-6 right-6 z-[160] text-white/50 hover:text-white transition transform hover:scale-110">
+            <i class="fa-solid fa-times text-3xl"></i>
+        </button>
+        <img id="lightboxImage" src=""
+            class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl scale-95 opacity-0 transition-all duration-300">
+    </div>
+
 
     <script>
         // ==========================================
@@ -639,7 +651,7 @@
                     `;
                 }
                 return `
-                <img src="${img}" class="w-full rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4" alt="Project Screenshot">
+                <img src="${img}" onclick="openLightbox('${img}')" class="w-full rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4 cursor-pointer hover:opacity-90 transition" alt="Project Screenshot">
                 `;
             }).join('');
 
@@ -667,6 +679,36 @@
             `;
 
             toggleGlobalModal('projectModal');
+        }
+
+        // --- Lightbox Logic ---
+        function openLightbox(src) {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImage');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Small delay for animation
+            setTimeout(() => {
+                img.src = src;
+                img.classList.remove('scale-95', 'opacity-0');
+                img.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            const img = document.getElementById('lightboxImage');
+
+            img.classList.remove('scale-100', 'opacity-100');
+            img.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+                img.src = ''; // Clear src
+            }, 300);
         }
 
         // --- Init ---
