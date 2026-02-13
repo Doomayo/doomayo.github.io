@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waheed Abdulbaki Shurbaji - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#d946ef',
+                        'light-secondary': '#0f766e',
+                        dark: '#050505',
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .dark .glass {
+            background: rgba(17, 17, 17, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .neon-glow:hover {
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .dark .neon-glow:hover {
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #0ea5e9, #0f766e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark .text-gradient {
+            background: linear-gradient(to right, #0ea5e9, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-enter {
+            animation: modalIn 0.3s ease-out forwards;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+
+<body
+    class="relative overflow-x-hidden bg-slate-50 text-slate-800 dark:bg-[#050505] dark:text-[#e2e8f0] selection:bg-primary/30 selection:text-black dark:selection:text-white">
+
+    <!-- Backgrounds -->
+    <div
+        class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-500">
+        <div
+            class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob">
+        </div>
+        <div
+            class="absolute top-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000">
+        </div>
+        <div
+            class="absolute bottom-0 left-1/3 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000">
+        </div>
+    </div>
+    <div
+        class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none dark:opacity-0 transition-opacity duration-500">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full filter blur-3xl opacity-60">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-100/50 rounded-full filter blur-3xl opacity-60">
+        </div>
+    </div>
+
+    <div id="app"></div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal"
+        class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-white/60 dark:bg-black/80 backdrop-blur-sm p-4 transition-colors">
+        <div
+            class="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl max-w-md w-full p-8 modal-enter relative">
+            <button onclick="toggleGlobalModal('contactModal')"
+                class="absolute top-4 right-4 rtl:right-auto rtl:left-4 text-slate-400 hover:text-slate-800 dark:hover:text-white transition">
+                <i class="fa-solid fa-times text-xl"></i>
+            </button>
+            <h3 id="modalContactTitle" class="text-2xl font-bold text-slate-800 dark:text-white mb-6 text-center"></h3>
+            <div class="space-y-6">
+                <!-- Phone -->
+                <div
+                    class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
+                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center"><i
+                            class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <div id="modalPhoneLabel"
+                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                        </div>
+                        <a href="tel:+491704358307"
+                            class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
+                            dir="ltr">+49 170 4358307</a>
+                    </div>
+                </div>
+                <!-- Email -->
+                <div
+                    class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
+                    <div
+                        class="w-10 h-10 bg-teal-100/50 dark:bg-secondary/20 text-light-secondary dark:text-secondary rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <div id="modalEmailLabel"
+                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                        </div>
+                        <a href="mailto:waheedhotspot@gmail.com"
+                            class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
+                            dir="ltr">waheedhotspot@gmail.com</a>
+                    </div>
+                </div>
+                <!-- Address -->
+                <div
+                    class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
+                    <div
+                        class="w-10 h-10 bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-300 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <div id="modalAddressLabel"
+                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                        </div>
+                        <div class="text-slate-800 dark:text-white font-medium">Warendorpstr., 23554 Lübeck</div>
+                    </div>
+                </div>
+            </div>
+            <button id="modalCloseBtn" onclick="toggleGlobalModal('contactModal')"
+                class="w-full mt-8 bg-slate-800 dark:bg-gradient-to-r dark:from-primary dark:to-blue-600 text-white py-3 rounded-xl hover:shadow-lg dark:hover:shadow-primary/25 hover:bg-slate-700 transition font-medium"></button>
+        </div>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal"
+        class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-white/80 dark:bg-black/90 backdrop-blur-md p-4 transition-colors">
+        <div
+            class="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto modal-enter relative flex flex-col">
+            <button onclick="toggleGlobalModal('projectModal')"
+                class="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-10 bg-white/50 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-slate-800 dark:text-white w-8 h-8 rounded-full flex items-center justify-center transition backdrop-blur-sm border border-slate-200 dark:border-white/20 shadow-sm">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <div id="projectModalContent" class="p-0"></div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // I18N DATA
+        // ==========================================
+        const translations = {
+            de: {
+                langName: "Deutsch",
+                header: {
+                    title: "B. Sc. Medizinische Informatik",
+                    uni: "Universität zu Lübeck",
+                    contact: "Kontakt",
+                    code: "DE",
+                    flag: "🇩🇪"
+                },
+                hero: {
+                    portfolioBtn: "Portfolio",
+                    contactBtn: "Kontakt"
+                },
+                about: {
+                    title: "Über mich",
+                    text: `Ich studiere Medizinische Informatik mit einem starken Fokus auf die Schnittstelle zwischen moderner Softwareentwicklung und medizinischer Anwendung. 
+                    Meine Leidenschaft liegt in der <b class="text-primary">Bilddatenverarbeitung</b>, <b class="text-primary">Medical Imaging (DICOM/PyTorch)</b> und <b class="text-light-secondary dark:text-secondary">Health-IT Standards (HL7)</b>.
+                    <br><br>
+                    In meiner praktischen Arbeit lege ich großen Wert auf saubere Implementierung, umfassendes Testing und strukturierte Dokumentation.`
+                },
+                skills: {
+                    title: "Skills & Tech Stack",
+                    categories: {
+                        prog: "Programmierung",
+                        imaging: "Medical Imaging",
+                        tools: "Tools & Daten",
+                        health: "Health-IT"
+                    }
+                },
+                experience: {
+                    title: "Erfahrung",
+                    jobs: [
+                        {
+                            role: "Werkstudent (Bilddaten & Annotation)",
+                            company: "Baader Food Systems, Lübeck",
+                            period: "04/2023 – 2025",
+                            details: [
+                                "Bearbeitung großer Mengen an Bilddaten & Qualitätssicherung.",
+                                "Überprüfung von Annotationen für Algorithmen-Training.",
+                                "Strukturierte Dokumentation und Fehleranalyse."
+                            ]
+                        },
+                        {
+                            role: "Selbstständig: PC-Service & IT-Support",
+                            company: "Damaskus / Lübeck",
+                            period: "01/2012 – heute",
+                            details: [
+                                "Hardware-Setup, Wasserkühlung (AIO) und Reparatur.",
+                                "System-Optimierung und Performance-Tuning für High-End Systeme."
+                            ]
+                        }
+                    ]
+                },
+                projects: {
+                    title: "Projekte",
+                    subtitle: "Ausgewählte Projekte",
+                    modal: {
+                        about: "Über das Projekt",
+                        gallery: "Galerie"
+                    },
+                    list: [
+                        {
+                            id: 1,
+                            title: "Tumor-Segmentierung mit Deep Learning",
+                            tech: "Python, PyTorch, DICOM",
+                            shortDesc: "Pipeline zur automatischen Erkennung von Hirntumoren in MRT-Bildern.",
+                            longDesc: "Entwicklung und Training eines U-Net Modells zur semantischen Segmentierung von Gliomen in multimodalen MRT-Scans (BraTS Datensatz). Die Pipeline umfasst Preprocessing (Bias Field Correction, Normalisierung), Data Augmentation und Evaluierung mittels Dice Score."
+                        },
+                        {
+                            id: 2,
+                            title: "E-Health Schnittstellen Integration",
+                            tech: "HL7, Mirth Connect",
+                            shortDesc: "Kommunikationskanälen zwischen medizinischen Systemen (KIS/Labor).",
+                            longDesc: "Implementierung robuster HL7v2 Schnittstellen zur Übertragung von Patientendaten (ADT) und Laborbefunden (ORU). Konfiguration von Mirth Connect Kanälen mit Javascript-Transformern und TCP/IP Listenern."
+                        },
+                        {
+                            id: 3,
+                            title: "2D Puzzle Game Engine",
+                            tech: "Java, JavaFX",
+                            shortDesc: "Eigene Physik-Engine und UI-Design im Team.",
+                            longDesc: "Entwicklung einer komponentenbasierten Game Engine von Grund auf. Features beinhalten Kollisionserkennung, Partikelsysteme, Level-Editor und ein Event-System. Umsetzung als Semesterprojekt mit Agilem Vorgehen (Scrum)."
+                        }
+                    ]
+                },
+                modal: {
+                    contactTitle: "Kontaktdaten",
+                    phone: "Telefon",
+                    email: "E-Mail",
+                    address: "Adresse",
+                    close: "Schließen"
+                }
+            },
+            en: {
+                langName: "English",
+                header: {
+                    title: "B. Sc. Medical Informatics",
+                    uni: "University of Lübeck",
+                    contact: "Contact",
+                    code: "EN",
+                    flag: "🇺🇸"
+                },
+                hero: {
+                    portfolioBtn: "Portfolio",
+                    contactBtn: "Contact"
+                },
+                about: {
+                    title: "About Me",
+                    text: `I study Medical Informatics with a strong focus on the intersection of modern software engineering and medical applications.
+                    My passion lies in <b class="text-primary">Image Processing</b>, <b class="text-primary">Medical Imaging (DICOM/PyTorch)</b>, and <b class="text-light-secondary dark:text-secondary">Health-IT Standards (HL7)</b>.
+                    <br><br>
+                    In my practical work, I place great emphasis on clean implementation, comprehensive testing, and structured documentation.`
+                },
+                skills: {
+                    title: "Skills & Tech Stack",
+                    categories: {
+                        prog: "Programming",
+                        imaging: "Medical Imaging",
+                        tools: "Tools & Data",
+                        health: "Health-IT"
+                    }
+                },
+                experience: {
+                    title: "Experience",
+                    jobs: [
+                        {
+                            role: "Working Student (Image Data & Annotation)",
+                            company: "Baader Food Systems, Lübeck",
+                            period: "04/2023 – 2025",
+                            details: [
+                                "Processing large amounts of image data & quality assurance.",
+                                "Verification of annotations for algorithm training.",
+                                "Structured documentation and error analysis."
+                            ]
+                        },
+                        {
+                            role: "Self-Employed: PC Service & IT Support",
+                            company: "Damascus / Lübeck",
+                            period: "01/2012 – present",
+                            details: [
+                                "Hardware setup, water cooling (AIO), and repair.",
+                                "System optimization and performance tuning for high-end systems."
+                            ]
+                        }
+                    ]
+                },
+                projects: {
+                    title: "Projects",
+                    subtitle: "Selected Projects",
+                    modal: {
+                        about: "About the Project",
+                        gallery: "Gallery"
+                    },
+                    list: [
+                        {
+                            id: 1,
+                            title: "Tumor Segmentation with Deep Learning",
+                            tech: "Python, PyTorch, DICOM",
+                            shortDesc: "Pipeline for automatic detection of brain tumors in MRI images.",
+                            longDesc: "Development and training of a U-Net model for semantic segmentation of gliomas in multimodal MRI scans (BraTS dataset). The pipeline includes preprocessing (bias field correction, normalization), data augmentation, and evaluation using Dice Score."
+                        },
+                        {
+                            id: 2,
+                            title: "E-Health Interface Integration",
+                            tech: "HL7, Mirth Connect",
+                            shortDesc: "Communication channels between medical systems (HIS/Lab).",
+                            longDesc: "Implementation of robust HL7v2 interfaces for transmitting patient data (ADT) and laboratory results (ORU). Configuration of Mirth Connect channels with Javascript transformers and TCP/IP listeners."
+                        },
+                        {
+                            id: 3,
+                            title: "2D Puzzle Game Engine",
+                            tech: "Java, JavaFX",
+                            shortDesc: "Custom physics engine and UI design in a team.",
+                            longDesc: "Development of a component-based game engine from scratch. Features include collision detection, particle systems, level editor, and an event system. Implemented as a semester project using Agile (Scrum)."
+                        }
+                    ]
+                },
+                modal: {
+                    contactTitle: "Contact Details",
+                    phone: "Phone",
+                    email: "E-Mail",
+                    address: "Address",
+                    close: "Close"
+                }
+            },
+            ar: {
+                langName: "العربية",
+                header: {
+                    title: "بكالوريوس المعلوماتية الطبية",
+                    uni: "جامعة لوبيك",
+                    contact: "تواصل",
+                    code: "AR",
+                    flag: "🇸🇦"
+                },
+                hero: {
+                    portfolioBtn: "أعمالي",
+                    contactBtn: "تواصل معي"
+                },
+                about: {
+                    title: "نبذة عني",
+                    text: `أدرس المعلوماتية الطبية بتركيز قوي على التقاطع بين هندسة البرمجيات الحديثة والتطبيقات الطبية.
+                    شغفي يكمن في <b class="text-primary">معالجة الصور</b>، <b class="text-primary">التصوير الطبي (DICOM/PyTorch)</b>، و <b class="text-light-secondary dark:text-secondary">معايير تكنولوجيا الصحة (HL7)</b>.
+                    <br><br>
+                    في عملي العملي، أولي اهتماماً كبيراً للتنفيذ النظيف، والاختبار الشامل، والتوثيق المنظم.`
+                },
+                skills: {
+                    title: "المهارات والتقنيات",
+                    categories: {
+                        prog: "البرمجة",
+                        imaging: "التصوير الطبي",
+                        tools: "الأدوات والبيانات",
+                        health: "تكنولوجيا الصحة"
+                    }
+                },
+                experience: {
+                    title: "الخبرة العملية",
+                    jobs: [
+                        {
+                            role: "طالب عامل (بيانات الصور والتعليقات)",
+                            company: "أنظمة بادر الغذائية، لوبيك",
+                            period: "04/2023 – 2025",
+                            details: [
+                                "معالجة كميات كبيرة من بيانات الصور وضمان الجودة.",
+                                "التحقق من التعليقات التوضيحية لتدريب الخوارزميات.",
+                                "توثيق منظم وتحليل الأخطاء."
+                            ]
+                        },
+                        {
+                            role: "عمل حر: صيانة الكمبيوتر ودعم تكنولوجيا المعلومات",
+                            company: "دمشق / لوبيك",
+                            period: "01/2012 – حتى الآن",
+                            details: [
+                                "إعداد الأجهزة، التبريد المائي (AIO) والإصلاح.",
+                                "تحسين النظام وضبط الأداء للأجهزة المتطورة."
+                            ]
+                        }
+                    ]
+                },
+                projects: {
+                    title: "المشاريع",
+                    subtitle: "مشاريع مختارة",
+                    modal: {
+                        about: "عن المشروع",
+                        gallery: "المعرض"
+                    },
+                    list: [
+                        {
+                            id: 1,
+                            title: "تجزئة الورم باستخدام التعلم العميق",
+                            tech: "Python, PyTorch, DICOM",
+                            shortDesc: "خط أنابيب للكشف التلقائي عن أورام المخ في صور الرنين المغناطيسي.",
+                            longDesc: "تطوير وتدريب نموذج U-Net للتجزئة الدلالية للأورام الدبقية في فحوصات الرنين المغناطيسي متعددة الوسائط (مجموعة بيانات BraTS). يشمل خط الأنابيب المعالجة المسبقة (تصحيح مجال التحيز، التطبيع)، وزيادة البيانات، والتقييم باستخدام مقياس Dice."
+                        },
+                        {
+                            id: 2,
+                            title: "تكامل واجهات الصحة الإلكترونية",
+                            tech: "HL7, Mirth Connect",
+                            shortDesc: "قنوات الاتصال بين الأنظمة الطبية (KIS/المختبر).",
+                            longDesc: "تنفيذ واجهات HL7v2 قوية لنقل بيانات المرضى (ADT) ونتائج المختبر (ORU). تكوين قنوات Mirth Connect مع محولات Javascript ومستمعي TCP/IP."
+                        },
+                        {
+                            id: 3,
+                            title: "محرك لعبة ألغاز ثنائي الأبعاد",
+                            tech: "Java, JavaFX",
+                            shortDesc: "محرك فيزيائي مخصص وتصميم واجهة المستخدم ضمن فريق.",
+                            longDesc: "تطوير محرك ألعاب قائم على المكونات من الصفر. تشمل الميزات اكتشاف الاصطدام، وأنظمة الجسيمات، ومحرر المستوى، ونظام الأحداث. تم تنفيذه كمشروع فصلي باستخدام منهجية Agile (Scrum)."
+                        }
+                    ]
+                },
+                modal: {
+                    contactTitle: "بيانات الاتصال",
+                    phone: "الهاتف",
+                    email: "البريد الإلكتروني",
+                    address: "العنوان",
+                    close: "إغلاق"
+                }
+            }
+        };
+
+        const staticData = {
+            header: {
+                name: "Waheed Abdulbaki Shurbaji",
+                image: "IMG_1039.jpeg"
+            },
+            skills: [
+                { id: "prog", items: ["Python", "Julia", "Java", "C#"], icon: "fa-code" },
+                { id: "imaging", items: ["PyTorch", "DICOM", "CT/MRT Segmentierung"], icon: "fa-brain" },
+                { id: "tools", items: ["Git", "Jupyter", "SQL", "Docker"], icon: "fa-database" },
+                { id: "health", items: ["HL7 v2", "Mirth Connect", "FHIR"], icon: "fa-heart-pulse" }
+            ],
+            // Images are shared across languages
+            projectImages: [
+                { id: 1, images: ["https://placehold.co/800x450/111/0ea5e9?text=MRT+Scan+Segmentation", "https://placehold.co/800x450/111/0ea5e9?text=U-Net+Architecture"] },
+                { id: 2, images: ["https://placehold.co/800x450/111/d946ef?text=HL7+Message+Flow", "https://placehold.co/800x450/111/d946ef?text=Mirth+Dashboard"] },
+                { id: 3, images: ["https://placehold.co/800x450/111/emerald?text=Game+Level+Design", "https://placehold.co/800x450/111/emerald?text=Physics+Engine+Debug"] }
+            ]
+        };
+
+        let currentLang = 'de';
+
+        // ==========================================
+        // STATE & FUNCTIONS
+        // ==========================================
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+
+            // RTL Logic
+            const html = document.documentElement;
+            html.setAttribute('lang', lang);
+
+            if (lang === 'ar') {
+                html.setAttribute('dir', 'rtl');
+                html.classList.add('rtl');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.classList.remove('rtl');
+            }
+
+            renderPortfolio();
+            toggleDropdown(false); // Close menu
+        }
+
+        function toggleDropdown(forceState) {
+            const menu = document.getElementById('langMenu');
+            // Helper to close if boolean passed, else toggle
+            if (typeof forceState === 'boolean') {
+                if (forceState) menu.classList.remove('hidden');
+                else menu.classList.add('hidden');
+            } else {
+                menu.classList.toggle('hidden');
+            }
+        }
+
+        // --- Theme Logic ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const icon = document.getElementById('themeIcon');
+            if (icon) icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+
+        // --- Modals ---
+        function toggleGlobalModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+
+                // Update Modal Static Text
+                const t = translations[currentLang].modal;
+                if (modalId === 'contactModal') {
+                    document.getElementById('modalContactTitle').innerText = t.contactTitle;
+                    document.getElementById('modalPhoneLabel').innerText = t.phone;
+                    document.getElementById('modalEmailLabel').innerText = t.email;
+                    document.getElementById('modalAddressLabel').innerText = t.address;
+                    document.getElementById('modalCloseBtn').innerText = t.close;
+                }
+
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function openProject(index) {
+            const t = translations[currentLang];
+            const proj = t.projects.list[index];
+            const images = staticData.projectImages.find(p => p.id === proj.id).images;
+            const content = document.getElementById('projectModalContent');
+
+            const imagesHTML = images.map(img => `
+                <img src="${img}" class="w-full rounded-xl border border-slate-200 dark:border-white/10 shadow-lg mb-4" alt="Project Screenshot">
+            `).join('');
+
+            content.innerHTML = `
+                <div class="relative h-64 overflow-hidden rounded-t-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-[#111] via-transparent to-transparent z-10"></div>
+                    <img src="${images[0]}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-6 left-8 rtl:left-auto rtl:right-8 z-20">
+                        <div class="text-xs font-mono text-light-secondary dark:text-secondary bg-white/80 dark:bg-black/50 backdrop-blur px-2 py-1 rounded border border-light-secondary/30 dark:border-secondary/30 inline-block mb-2 font-bold">${proj.tech}</div>
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white">${proj.title}</h2>
+                    </div>
+                </div>
+                
+                <div class="p-8">
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-4">${t.projects.modal.about}</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 text-lg">${proj.longDesc}</p>
+                    
+                    <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-4">${t.projects.modal.gallery}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${imagesHTML}
+                    </div>
+                </div>
+            `;
+
+            toggleGlobalModal('projectModal');
+        }
+
+        // --- Init ---
+        (function init() {
+            // Theme
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+
+            // Language
+            const savedLang = localStorage.getItem('lang');
+            if (savedLang) setLanguage(savedLang);
+            else setLanguage('de'); // Default
+
+            // Listeners
+            ['contactModal', 'projectModal'].forEach(id => {
+                document.getElementById(id).addEventListener('click', function (e) {
+                    if (e.target === this) toggleGlobalModal(id);
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#langDropdownContainer')) {
+                    toggleDropdown(false);
+                }
+            });
+
+        })();
+
+        // ==========================================
+        // RENDER
+        // ==========================================
+
+        function renderPortfolio() {
+            const t = translations[currentLang];
+            const app = document.getElementById('app');
+
+            // Update Icon
+            updateThemeIcon();
+
+            // Header
+            const headerHTML = `
+                <header class="glass sticky top-0 z-40 transition-all">
+                    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+                        <div class="font-bold text-xl text-slate-800 dark:text-white tracking-tight flex items-baseline gap-2">
+                             ${staticData.header.name} 
+                             <span class="text-primary text-sm font-normal hidden sm:inline border-l-2 border-slate-300 dark:border-slate-700 pl-2 rtl:border-l-0 rtl:border-r-2 rtl:pl-0 rtl:pr-2">${t.header.title}</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <!-- Theme Toggle -->
+                            <button onclick="toggleTheme()" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center justify-center">
+                                <i id="themeIcon" class="fa-solid fa-moon"></i>
+                            </button>
+
+                            <!-- Lang Dropdown -->
+                            <div class="relative" id="langDropdownContainer">
+                                <button onclick="toggleDropdown()" class="h-10 px-3 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-white hover:bg-slate-200 dark:hover:bg-white/20 transition flex items-center gap-2 font-medium text-sm">
+                                    <span>${t.header.flag}</span> <span class="hidden sm:inline">${t.header.code}</span> <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
+                                </button>
+                                <!-- Dropdown Menu -->
+                                <div id="langMenu" class="hidden absolute top-12 right-0 rtl:right-auto rtl:left-0 w-32 bg-white dark:bg-[#151515] border border-slate-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                                    <button onclick="setLanguage('de')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'de' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
+                                        <span>🇩🇪</span> Deutsch
+                                    </button>
+                                    <button onclick="setLanguage('en')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'en' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
+                                        <span>🇺🇸</span> English
+                                    </button>
+                                    <button onclick="setLanguage('ar')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'ar' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
+                                        <span>🇸🇦</span> العربية
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button onclick="toggleGlobalModal('contactModal')" class="bg-slate-800 hover:bg-slate-700 dark:bg-white/10 dark:hover:bg-white/20 text-white px-5 py-2 rounded-full transition text-sm font-medium border border-transparent dark:border-white/10 flex items-center gap-2 backdrop-blur-md">
+                                <i class="fa-solid fa-envelope"></i> <span class="hidden sm:inline">${t.header.contact}</span>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+            `;
+
+            const heroHTML = `
+                <section class="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 relative">
+                    <div class="relative mb-8 group animate-float">
+                        <div class="hidden dark:block absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                        <img src="${staticData.header.image}" class="relative w-48 h-48 rounded-full border-4 border-white dark:border-white/10 object-cover shadow-2xl bg-slate-200 dark:bg-black">
+                    </div>
+                    <div class="space-y-4 max-w-2xl">
+                        <h1 class="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">
+                            <span class="text-gradient">${staticData.header.name}</span>
+                        </h1>
+                        <p class="text-2xl text-slate-500 dark:text-slate-400 font-light">${t.header.title}</p>
+                        <p class="text-primary font-medium tracking-wide border border-primary/20 bg-primary/5 py-1 px-4 rounded-full inline-block mt-2">${t.header.uni}</p>
+                    </div>
+                    
+                    <div class="mt-12 flex gap-4">
+                        <a href="#projects" class="px-8 py-3 rounded-full bg-slate-900 text-white dark:bg-white dark:text-black font-bold hover:bg-slate-700 dark:hover:bg-slate-200 transition shadow-lg dark:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                            ${t.hero.portfolioBtn}
+                        </a>
+                         <button onclick="toggleGlobalModal('contactModal')" class="px-8 py-3 rounded-full border border-slate-300 dark:border-white/20 text-slate-700 dark:text-white font-medium hover:bg-slate-100 dark:hover:bg-white/5 transition">
+                            ${t.hero.contactBtn}
+                        </button>
+                    </div>
+                </section>
+            `;
+
+            const aboutHTML = `
+                <section class="max-w-3xl mx-auto px-6 py-20">
+                    <div class="glass p-10 rounded-3xl relative overflow-hidden group shadow-lg dark:shadow-none">
+                        <div class="absolute top-0 left-0 rtl:left-auto rtl:right-0 w-1 h-full bg-gradient-to-b from-primary to-secondary"></div>
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">${t.about.title}</h2>
+                        <div class="text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+                            ${t.about.text}
+                        </div>
+                    </div>
+                </section>
+            `;
+
+            let skillsHTML = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">';
+            staticData.skills.forEach(skill => {
+                // Determine layout direction for margins
+                const iconMargin = currentLang === 'ar' ? 'ml-0' : 'mr-0'; // Icons in grid center anyway
+
+                skillsHTML += `
+                    <div class="bg-white dark:bg-[#111] p-6 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300 group neon-glow bg-opacity-50 shadow-sm dark:shadow-none">
+                        <div class="w-12 h-12 bg-slate-50 dark:bg-white/5 rounded-xl flex items-center justify-center text-primary text-xl mb-4 group-hover:scale-110 transition-transform group-hover:bg-primary/10 dark:group-hover:bg-primary/20"><i class="fa-solid ${skill.icon}"></i></div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-3 text-lg">${t.skills.categories[skill.id]}</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${skill.items.map(item => `<span class="bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-100 dark:border-white/5 text-xs px-2 py-1 rounded-[6px] font-medium">${item}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            skillsHTML += '</div>';
+
+            const skillsSection = `
+                <section class="max-w-7xl mx-auto px-6 py-12">
+                     <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-10 border-l-4 rtl:border-l-0 rtl:border-r-4 border-primary pl-4 rtl:pl-0 rtl:pr-4">${t.skills.title}</h2>
+                    ${skillsHTML}
+                </section>
+            `;
+
+            let projListHTML = '<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">';
+            t.projects.list.forEach((proj, index) => {
+                const images = staticData.projectImages.find(p => p.id === proj.id).images;
+                projListHTML += `
+                    <div onclick="openProject(${index})" class="bg-white dark:bg-[#111] rounded-2xl border border-slate-200 dark:border-white/5 p-6 hover:border-primary/50 transition duration-300 cursor-pointer group hover:-translate-y-1 relative overflow-hidden shadow-sm hover:shadow-lg dark:shadow-none">
+                        <div class="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                            <i class="fa-solid ${currentLang === 'ar' ? 'fa-arrow-up-left-from-square' : 'fa-arrow-up-right-from-square'}"></i>
+                        </div>
+                        <div class="mb-4 h-48 rounded-xl bg-slate-100 dark:bg-[#000] overflow-hidden border border-slate-100 dark:border-white/5 relative">
+                             <img src="${images[0]}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
+                             <div class="absolute bottom-2 left-2 rtl:left-auto rtl:right-2">
+                                <span class="bg-white/90 dark:bg-black/70 backdrop-blur text-primary text-[10px] uppercase font-bold px-2 py-1 rounded border border-primary/20">${proj.tech}</span>
+                             </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-primary transition-colors">${proj.title}</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">${proj.shortDesc}</p>
+                    </div>
+                `;
+            });
+            projListHTML += '</div>';
+
+            let expListHTML = '<div class="space-y-4">';
+            t.experience.jobs.forEach(job => {
+                expListHTML += `
+                    <div class="relative pl-8 rtl:pl-0 rtl:pr-8 border-l-2 rtl:border-l-0 rtl:border-r-2 border-slate-200 dark:border-white/10 hover:border-primary transition-colors py-2 group">
+                        <div class="absolute -left-[9px] rtl:left-auto rtl:-right-[9px] top-3 w-4 h-4 rounded-full bg-white dark:bg-[#050505] border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary"></div>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                             <h3 class="text-lg font-bold text-slate-800 dark:text-white">${job.role}</h3>
+                             <span class="text-xs font-bold text-white bg-primary px-2 py-1 rounded-full whitespace-nowrap mt-1 sm:mt-0 inline-block">${job.period}</span>
+                        </div>
+                        <div class="text-light-secondary dark:text-secondary font-medium text-sm mb-3">${job.company}</div>
+                        <ul class="list-disc ml-4 rtl:ml-0 rtl:mr-4 text-slate-600 dark:text-slate-400 text-sm space-y-1 leading-relaxed">
+                            ${job.details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            expListHTML += '</div>';
+
+            const splitSection = `
+                <section id="projects" class="max-w-7xl mx-auto px-6 py-20">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                        
+                        <!-- Experience (4 cols) -->
+                        <div class="lg:col-span-4">
+                            <h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-xl text-primary"><i class="fa-solid fa-briefcase"></i></span>
+                                ${t.experience.title}
+                            </h2>
+                            ${expListHTML}
+                        </div>
+
+                        <!-- Projects (8 cols) -->
+                        <div class="lg:col-span-8">
+                            <h2 class="text-3xl font-bold mb-8 text-slate-900 dark:text-white flex items-center gap-3">
+                                <span class="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/5 flex items-center justify-center text-xl text-light-secondary dark:text-secondary"><i class="fa-solid fa-rocket"></i></span>
+                                ${t.projects.title}
+                            </h2>
+                            ${projListHTML}
+                        </div>
+
+                    </div>
+                </section>
+            `;
+
+            const footerHTML = `
+                <footer class="text-center py-10 text-slate-500 text-sm bg-slate-100 dark:bg-black border-t border-slate-200 dark:border-white/5 mt-12 relative overflow-hidden">
+                    <div class="relative z-10">&copy; 2025 Waheed Abdulbaki Shurbaji</div>
+                    <div class="hidden dark:block absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-32 bg-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
+                </footer>
+            `;
+
+            app.innerHTML = headerHTML + heroHTML + aboutHTML + skillsSection + splitSection + footerHTML;
+        }
+    </script>
+</body>
+
+</html>
