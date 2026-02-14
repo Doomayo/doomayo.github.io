@@ -154,6 +154,8 @@
 
     <canvas id="ascii-rain"
         class="fixed inset-0 z-[-1] pointer-events-none opacity-0 transition-opacity duration-1000"></canvas>
+    <canvas id="network-effect"
+        class="fixed inset-0 z-[-1] pointer-events-none opacity-0 transition-opacity duration-1000"></canvas>
     <div id="app"></div>
 
     <!-- Contact Modal -->
@@ -486,8 +488,10 @@
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             }
+
             updateThemeIcon();
             checkRain();
+            checkNetwork();
         }
 
         function updateThemeIcon() {
@@ -510,6 +514,97 @@
             canvas.height = window.innerHeight;
             const columns = Math.floor(canvas.width / fontSize);
             drops = Array(columns).fill(1).map(() => Math.random() * -100); // Start above screen
+        }
+
+        // --- Network Effect Logic (Light Mode) ---
+        let networkInterval;
+        const netCanvas = document.getElementById('network-effect');
+        const netCtx = netCanvas.getContext('2d');
+        let particles = [];
+        const particleCount = 60; // Number of nodes
+        const connectionDistance = 150;
+        const netSpeed = 20; // 50fps max
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * netCanvas.width;
+                this.y = Math.random() * netCanvas.height;
+                this.vx = (Math.random() - 0.5) * 1;
+                this.vy = (Math.random() - 0.5) * 1;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce
+                if (this.x < 0 || this.x > netCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > netCanvas.height) this.vy *= -1;
+            }
+            draw() {
+                netCtx.fillStyle = 'rgba(15, 118, 110, 0.5)'; // Tealish
+                netCtx.beginPath();
+                netCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                netCtx.fill();
+            }
+        }
+
+        function initNetwork() {
+            netCanvas.width = window.innerWidth;
+            netCanvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function drawNetwork() {
+            netCtx.clearRect(0, 0, netCanvas.width, netCanvas.height);
+
+            // Update & Draw Particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Draw Connections
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        netCtx.beginPath();
+                        netCtx.strokeStyle = `rgba(14, 165, 233, ${1 - distance / connectionDistance})`; // fading blue
+                        netCtx.lineWidth = 1;
+                        netCtx.moveTo(particles[i].x, particles[i].y);
+                        netCtx.lineTo(particles[j].x, particles[j].y);
+                        netCtx.stroke();
+                    }
+                }
+            }
+
+            if (!document.documentElement.classList.contains('dark')) {
+                networkInterval = requestAnimationFrame(drawNetwork);
+            }
+        }
+
+        function checkNetwork() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const canvas = document.getElementById('network-effect');
+
+            if (!isDark) { // Light Mode
+                canvas.classList.remove('opacity-0');
+                if (!networkInterval) {
+                    initNetwork();
+                    drawNetwork();
+                }
+            } else { // Dark Mode
+                canvas.classList.add('opacity-0');
+                if (networkInterval) {
+                    cancelAnimationFrame(networkInterval);
+                    networkInterval = null;
+                }
+            }
         }
 
         function drawRain(timestamp) {
@@ -573,7 +668,9 @@
         }
 
         window.addEventListener('resize', () => {
-            if (document.documentElement.classList.contains('dark')) initRain();
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) initRain();
+            else initNetwork();
         });
 
         // --- Modals ---
@@ -707,7 +804,10 @@
             if (savedTheme === 'dark' || (!savedTheme && systemDark)) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
 
+
+
             checkRain(); // Init Rain if dark
+            checkNetwork(); // Init Network if light
 
             // Language
             const savedLang = localStorage.getItem('lang');
