@@ -152,6 +152,8 @@
         </div>
     </div>
 
+    <canvas id="ascii-rain"
+        class="fixed inset-0 z-[-1] pointer-events-none opacity-0 transition-opacity duration-1000"></canvas>
     <div id="app"></div>
 
     <!-- Contact Modal -->
@@ -160,25 +162,13 @@
         <div
             class="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl max-w-md w-full p-8 modal-enter relative">
             <button onclick="toggleGlobalModal('contactModal')"
-                class="absolute top-4 right-4 rtl:right-auto rtl:left-4 text-slate-400 hover:text-slate-800 dark:hover:text-white transition">
+                class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 dark:hover:text-white transition">
                 <i class="fa-solid fa-times text-xl"></i>
             </button>
             <h3 id="modalContactTitle" class="text-2xl font-bold text-slate-800 dark:text-white mb-6 text-center"></h3>
             <div class="space-y-6">
                 <!-- Phone -->
-                <div
-                    class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
-                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center"><i
-                            class="fa-solid fa-phone"></i></div>
-                    <div>
-                        <div id="modalPhoneLabel"
-                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
-                        </div>
-                        <a href="tel:+491704358307"
-                            class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
-                            dir="ltr">+49 170 4358307</a>
-                    </div>
-                </div>
+
                 <!-- Email -->
                 <div
                     class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
@@ -190,9 +180,9 @@
                         <div id="modalEmailLabel"
                             class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
                         </div>
-                        <a href="mailto:waheedhotspot@gmail.com" onclick="return confirmEmail(event)"
+                        <a href="mailto:waheedshurbaji@icloud.com" onclick="return confirmEmail(event)"
                             class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
-                            dir="ltr">waheedhotspot@gmail.com</a>
+                            dir="ltr">waheedshurbaji@icloud.com</a>
                     </div>
                 </div>
                 <!-- Address -->
@@ -222,7 +212,7 @@
         <div
             class="bg-white dark:bg-[#111] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto modal-enter relative flex flex-col">
             <button onclick="toggleGlobalModal('projectModal')"
-                class="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-50 bg-white/50 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-slate-800 dark:text-white w-8 h-8 rounded-full flex items-center justify-center transition backdrop-blur-sm border border-slate-200 dark:border-white/20 shadow-sm">
+                class="absolute top-4 right-4 z-50 bg-white/50 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-slate-800 dark:text-white w-8 h-8 rounded-full flex items-center justify-center transition backdrop-blur-sm border border-slate-200 dark:border-white/20 shadow-sm">
                 <i class="fa-solid fa-times"></i>
             </button>
             <div id="projectModalContent" class="p-0"></div>
@@ -272,7 +262,8 @@
                         prog: "Programmierung",
                         imaging: "Medical Imaging",
                         tools: "Tools & Daten",
-                        health: "Health-IT"
+                        health: "Health-IT",
+                        languages: "Sprachen"
                     }
                 },
                 experience: {
@@ -332,7 +323,7 @@
                 },
                 modal: {
                     contactTitle: "Kontaktdaten",
-                    phone: "Telefon",
+
                     email: "E-Mail",
                     address: "Adresse",
                     close: "Schließen"
@@ -364,7 +355,8 @@
                         prog: "Programming",
                         imaging: "Medical Imaging",
                         tools: "Tools & Data",
-                        health: "Health-IT"
+                        health: "Health-IT",
+                        languages: "Languages"
                     }
                 },
                 experience: {
@@ -424,104 +416,12 @@
                 },
                 modal: {
                     contactTitle: "Contact Details",
-                    phone: "Phone",
                     email: "E-Mail",
                     address: "Address",
                     close: "Close"
                 }
             },
-            ar: {
-                langName: "العربية",
-                header: {
-                    title: "بكالوريوس المعلوماتية الطبية",
-                    uni: "جامعة لوبيك",
-                    contact: "تواصل",
-                    code: "AR",
-                    flag: "🇸🇦"
-                },
-                hero: {
-                    portfolioBtn: "أعمالي",
-                    contactBtn: "تواصل معي"
-                },
-                about: {
-                    title: "نبذة عني",
-                    text: `أدرس المعلوماتية الطبية بتركيز قوي على التقاطع بين هندسة البرمجيات الحديثة والتطبيقات الطبية.
-                    شغفي يكمن في <b class="text-primary">معالجة الصور</b>، <b class="text-primary">التصوير الطبي (DICOM/PyTorch)</b>، و <b class="text-light-secondary dark:text-secondary">معايير تكنولوجيا الصحة (HL7)</b>.
-                    <br><br>
-                    في عملي العملي، أولي اهتماماً كبيراً للتنفيذ النظيف، والاختبار الشامل، والتوثيق المنظم.`
-                },
-                skills: {
-                    title: "المهارات والتقنيات",
-                    categories: {
-                        prog: "البرمجة",
-                        imaging: "التصوير الطبي",
-                        tools: "الأدوات والبيانات",
-                        health: "تكنولوجيا الصحة"
-                    }
-                },
-                experience: {
-                    title: "الخبرة العملية",
-                    jobs: [
-                        {
-                            role: "طالب عامل (بيانات الصور والتعليقات)",
-                            company: "أنظمة بادر الغذائية، لوبيك",
-                            period: "04/2023 – 2025",
-                            details: [
-                                "معالجة كميات كبيرة من بيانات الصور وضمان الجودة.",
-                                "التحقق من التعليقات التوضيحية لتدريب الخوارزميات.",
-                                "توثيق منظم وتحليل الأخطاء."
-                            ]
-                        },
-                        {
-                            role: "عمل حر: صيانة الكمبيوتر ودعم تكنولوجيا المعلومات",
-                            company: "دمشق / لوبيك",
-                            period: "01/2012 – حتى الآن",
-                            details: [
-                                "إعداد الأجهزة، التبريد المائي (AIO) والإصلاح.",
-                                "تحسين النظام وضبط الأداء للأجهزة المتطورة."
-                            ]
-                        }
-                    ]
-                },
-                projects: {
-                    title: "المشاريع",
-                    subtitle: "مشاريع مختارة",
-                    modal: {
-                        about: "عن المشروع",
-                        gallery: "المعرض"
-                    },
-                    list: [
-                        {
-                            id: 1,
-                            title: "تجزئة الورم باستخدام التعلم العميق",
-                            tech: "Python, PyTorch, DICOM",
-                            shortDesc: "خط أنابيب للكشف التلقائي عن أورام المخ في صور الرنين المغناطيسي.",
-                            longDesc: "تطوير وتدريب نموذج U-Net للتجزئة الدلالية للأورام الدبقية في فحوصات الرنين المغناطيسي متعددة الوسائط (مجموعة بيانات BraTS). يشمل خط الأنابيب المعالجة المسبقة (تصحيح مجال التحيز، التطبيع)، وزيادة البيانات، والتقييم باستخدام مقياس Dice."
-                        },
-                        {
-                            id: 2,
-                            title: "تكامل واجهات الصحة الإلكترونية",
-                            tech: "HL7, Mirth Connect",
-                            shortDesc: "قنوات الاتصال بين الأنظمة الطبية (KIS/المختبر).",
-                            longDesc: "تنفيذ واجهات HL7v2 قوية لنقل بيانات المرضى (ADT) ونتائج المختبر (ORU). تكوين قنوات Mirth Connect مع محولات Javascript ومستمعي TCP/IP."
-                        },
-                        {
-                            id: 3,
-                            title: "محرك لعبة ألغاز ثنائي الأبعاد",
-                            tech: "Java, JavaFX",
-                            shortDesc: "محرك فيزيائي مخصص وتصميم واجهة المستخدم ضمن فريق.",
-                            longDesc: "تطوير محرك ألعاب قائم على المكونات من الصفر. تشمل الميزات اكتشاف الاصطدام، وأنظمة الجسيمات، ومحرر المستوى، ونظام الأحداث. تم تنفيذه كمشروع فصلي باستخدام منهجية Agile (Scrum)."
-                        }
-                    ]
-                },
-                modal: {
-                    contactTitle: "بيانات الاتصال",
-                    phone: "الهاتف",
-                    email: "البريد الإلكتروني",
-                    address: "العنوان",
-                    close: "إغلاق"
-                }
-            }
+
         };
 
         const staticData = {
@@ -533,11 +433,13 @@
                 { id: "prog", items: ["Python", "Julia", "Java", "C#"], icon: "fa-code" },
                 { id: "imaging", items: ["PyTorch", "DICOM", "CT/MRT Segmentierung"], icon: "fa-brain" },
                 { id: "tools", items: ["Git", "Jupyter", "SQL", "Docker"], icon: "fa-database" },
-                { id: "health", items: ["HL7 v2", "Mirth Connect", "FHIR"], icon: "fa-heart-pulse" }
+                { id: "tools", items: ["Git", "Jupyter", "SQL", "Docker"], icon: "fa-database" },
+                { id: "health", items: ["HL7 v2", "Mirth Connect", "FHIR"], icon: "fa-heart-pulse" },
+                { id: "languages", items: ["Arabic (Mother Tongue)", "English (Fluent)", "German (Fluent)"], icon: "fa-language" }
             ],
             // Images are shared across languages
             projectImages: [
-                { id: 1, images: ["tumor_thumbnail_v2.jpg", "MedizinischeBildverarbeitung_GruppeC.pdf", "tumor_segmentation_demo1.mp4", "tumor_segmentation_demo2.mp4"] },
+                { id: 1, images: ["tumor_thumbnail.png", "MedizinischeBildverarbeitung_GruppeC.pdf", "tumor_segmentation_demo1.mp4", "tumor_segmentation_demo2.mp4"] },
                 { id: 2, images: ["https://placehold.co/1200x675/111/d946ef?text=HL7+Message+Flow", "KIS Documentation.pdf", "https://placehold.co/1200x675/111/d946ef?text=Mirth+Dashboard"] },
                 { id: 3, images: ["game_screenshot_1.png", "GameEngine_Manual.pdf", "game_main_menu.png", "game_level_editor.png", "game_sandbox.png", "Start_instructions_when_selected_Level.png"] }
             ]
@@ -555,14 +457,8 @@
             // RTL Logic
             const html = document.documentElement;
             html.setAttribute('lang', lang);
-
-            if (lang === 'ar') {
-                html.setAttribute('dir', 'rtl');
-                html.classList.add('rtl');
-            } else {
-                html.setAttribute('dir', 'ltr');
-                html.classList.remove('rtl');
-            }
+            html.setAttribute('dir', 'ltr');
+            html.classList.remove('rtl');
 
             renderPortfolio();
             toggleDropdown(false); // Close menu
@@ -591,6 +487,7 @@
                 localStorage.setItem('theme', 'dark');
             }
             updateThemeIcon();
+            checkRain();
         }
 
         function updateThemeIcon() {
@@ -598,6 +495,86 @@
             const icon = document.getElementById('themeIcon');
             if (icon) icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
+
+        // --- ASCII Rain Logic ---
+        let rainInterval;
+        const canvas = document.getElementById('ascii-rain');
+        const ctx = canvas.getContext('2d');
+        let drops = [];
+        const fontSize = 14;
+        const rainSpeed = 50; // Delay in ms between frames
+        let lastTime = 0;
+
+        function initRain() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1).map(() => Math.random() * -100); // Start above screen
+        }
+
+        function drawRain(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = timestamp - lastTime;
+
+            if (deltaTime < rainSpeed) {
+                if (document.documentElement.classList.contains('dark')) {
+                    rainInterval = requestAnimationFrame(drawRain);
+                }
+                return;
+            }
+            lastTime = timestamp;
+
+            // Fade out
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                // Random char (Katakana + Latin)
+                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+
+                // RGB Rainbow Effect
+                const r = Math.floor(Math.random() * 255);
+                const g = Math.floor(Math.random() * 255);
+                const b = Math.floor(Math.random() * 255);
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+
+            if (document.documentElement.classList.contains('dark')) {
+                rainInterval = requestAnimationFrame(drawRain);
+            }
+        }
+
+        function checkRain() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const canvas = document.getElementById('ascii-rain');
+
+            if (isDark) {
+                canvas.classList.remove('opacity-0');
+                if (!rainInterval) {
+                    initRain(); // Resize/Reset
+                    drawRain();
+                }
+            } else {
+                canvas.classList.add('opacity-0');
+                if (rainInterval) {
+                    cancelAnimationFrame(rainInterval);
+                    rainInterval = null;
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (document.documentElement.classList.contains('dark')) initRain();
+        });
 
         // --- Modals ---
         function toggleGlobalModal(modalId) {
@@ -610,7 +587,6 @@
                 const t = translations[currentLang].modal;
                 if (modalId === 'contactModal') {
                     document.getElementById('modalContactTitle').innerText = t.contactTitle;
-                    document.getElementById('modalPhoneLabel').innerText = t.phone;
                     document.getElementById('modalEmailLabel').innerText = t.email;
                     document.getElementById('modalAddressLabel').innerText = t.address;
                     document.getElementById('modalCloseBtn').innerText = t.close;
@@ -624,8 +600,7 @@
 
         function confirmEmail(e) {
             const msg = currentLang === 'de' ? 'Möchten Sie eine E-Mail an Waheed senden?' :
-                currentLang === 'ar' ? 'هل ترغب في إرسال بريد إلكتروني إلى وحيد؟' :
-                    'Do you want to send an email to Waheed?';
+                'Do you want to send an email to Waheed?';
 
             if (!confirm(msg)) {
                 e.preventDefault();
@@ -672,7 +647,7 @@
                 <div class="relative h-64 overflow-hidden rounded-t-2xl">
                     <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-[#111] via-transparent to-transparent z-10"></div>
                     <img src="${allMedia[0]}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-6 left-8 rtl:left-auto rtl:right-8 z-20">
+                    <div class="absolute bottom-6 left-8 z-20">
                         <div class="text-xs font-mono text-light-secondary dark:text-secondary bg-white/80 dark:bg-black/50 backdrop-blur px-2 py-1 rounded border border-light-secondary/30 dark:border-secondary/30 inline-block mb-2 font-bold">${proj.tech}</div>
                         <h2 class="text-3xl font-bold text-slate-900 dark:text-white">${proj.title}</h2>
                     </div>
@@ -732,6 +707,8 @@
             if (savedTheme === 'dark' || (!savedTheme && systemDark)) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
 
+            checkRain(); // Init Rain if dark
+
             // Language
             const savedLang = localStorage.getItem('lang');
             if (savedLang) setLanguage(savedLang);
@@ -770,7 +747,7 @@
                     <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                         <div class="font-bold text-xl text-slate-800 dark:text-white tracking-tight flex items-baseline gap-2">
                              ${staticData.header.name} 
-                             <span class="text-primary text-sm font-normal hidden sm:inline border-l-2 border-slate-300 dark:border-slate-700 pl-2 rtl:border-l-0 rtl:border-r-2 rtl:pl-0 rtl:pr-2">${t.header.title}</span>
+                             <span class="text-primary text-sm font-normal hidden sm:inline border-l-2 border-slate-300 dark:border-slate-700 pl-2">${t.header.title}</span>
                         </div>
                         
                         <div class="flex items-center gap-3">
@@ -785,15 +762,12 @@
                                     <span>${t.header.flag}</span> <span class="hidden sm:inline">${t.header.code}</span> <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
                                 </button>
                                 <!-- Dropdown Menu -->
-                                <div id="langMenu" class="hidden absolute top-12 right-0 rtl:right-auto rtl:left-0 w-32 bg-white dark:bg-[#151515] border border-slate-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
-                                    <button onclick="setLanguage('de')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'de' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
+                                <div id="langMenu" class="hidden absolute top-12 right-0 w-32 bg-white dark:bg-[#151515] border border-slate-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                                    <button onclick="setLanguage('de')" class="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'de' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
                                         <span>🇩🇪</span> Deutsch
                                     </button>
-                                    <button onclick="setLanguage('en')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'en' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
+                                    <button onclick="setLanguage('en')" class="w-full text-left px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'en' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
                                         <span>🇺🇸</span> English
-                                    </button>
-                                    <button onclick="setLanguage('ar')" class="w-full text-left rtl:text-right px-4 py-3 text-sm hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-3 ${currentLang === 'ar' ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300'}">
-                                        <span>🇸🇦</span> العربية
                                     </button>
                                 </div>
                             </div>
@@ -834,7 +808,7 @@
             const aboutHTML = `
                 <section class="max-w-3xl mx-auto px-6 py-10">
                     <div class="glass p-10 rounded-3xl relative overflow-hidden group shadow-lg dark:shadow-none">
-                        <div class="absolute top-0 left-0 rtl:left-auto rtl:right-0 w-1 h-full bg-gradient-to-b from-primary to-secondary"></div>
+                        <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-secondary"></div>
                         <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">${t.about.title}</h2>
                         <div class="text-lg leading-relaxed text-slate-600 dark:text-slate-300">
                             ${t.about.text}
@@ -846,7 +820,7 @@
             let skillsHTML = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">';
             staticData.skills.forEach(skill => {
                 // Determine layout direction for margins
-                const iconMargin = currentLang === 'ar' ? 'ml-0' : 'mr-0'; // Icons in grid center anyway
+                const iconMargin = 'mr-0'; // Icons in grid center anyway
 
                 skillsHTML += `
                     <div class="bg-white dark:bg-[#111] p-6 rounded-2xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300 group neon-glow bg-opacity-50 shadow-sm dark:shadow-none">
@@ -862,7 +836,7 @@
 
             const skillsSection = `
                 <section class="max-w-7xl mx-auto px-6 py-12">
-                     <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-10 border-l-4 rtl:border-l-0 rtl:border-r-4 border-primary pl-4 rtl:pl-0 rtl:pr-4">${t.skills.title}</h2>
+                     <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-10 border-l-4 border-primary pl-4">${t.skills.title}</h2>
                     ${skillsHTML}
                 </section>
             `;
@@ -872,12 +846,12 @@
                 const images = staticData.projectImages.find(p => p.id === proj.id).images;
                 projListHTML += `
                     <div onclick="openProject(${index})" class="bg-white dark:bg-[#111] rounded-2xl border border-slate-200 dark:border-white/5 p-6 hover:border-primary/50 transition duration-300 cursor-pointer group hover:-translate-y-1 relative overflow-hidden shadow-sm hover:shadow-lg dark:shadow-none">
-                        <div class="absolute top-0 right-0 rtl:right-auto rtl:left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                            <i class="fa-solid ${currentLang === 'ar' ? 'fa-arrow-up-left-from-square' : 'fa-arrow-up-right-from-square'}"></i>
+                        <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </div>
                         <div class="mb-4 h-48 rounded-xl bg-slate-100 dark:bg-[#000] overflow-hidden border border-slate-100 dark:border-white/5 relative">
                              <img src="${images[0]}" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-500">
-                             <div class="absolute bottom-2 left-2 rtl:left-auto rtl:right-2">
+                             <div class="absolute bottom-2 left-2">
                                 <span class="bg-white/90 dark:bg-black/70 backdrop-blur text-primary text-[10px] uppercase font-bold px-2 py-1 rounded border border-primary/20">${proj.tech}</span>
                              </div>
                         </div>
@@ -891,8 +865,8 @@
             let expListHTML = '<div class="space-y-4">';
             t.experience.jobs.forEach(job => {
                 expListHTML += `
-                    <div class="relative pl-8 rtl:pl-0 rtl:pr-8 border-l-2 rtl:border-l-0 rtl:border-r-2 border-slate-200 dark:border-white/10 hover:border-primary transition-colors py-2 group">
-                        <div class="absolute -left-[9px] rtl:left-auto rtl:-right-[9px] top-3 w-4 h-4 rounded-full bg-white dark:bg-[#050505] border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary"></div>
+                    <div class="relative pl-8 border-l-2 border-slate-200 dark:border-white/10 hover:border-primary transition-colors py-2 group">
+                        <div class="absolute -left-[9px] top-3 w-4 h-4 rounded-full bg-white dark:bg-[#050505] border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary"></div>
                         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
                              <h3 class="text-lg font-bold text-slate-800 dark:text-white">${job.role}</h3>
                              <span class="text-xs font-bold text-white bg-primary px-2 py-1 rounded-full whitespace-nowrap mt-1 sm:mt-0 inline-block">${job.period}</span>
