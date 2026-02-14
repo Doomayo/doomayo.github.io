@@ -152,6 +152,8 @@
         </div>
     </div>
 
+    <canvas id="ascii-rain"
+        class="fixed inset-0 z-[-1] pointer-events-none opacity-0 transition-opacity duration-1000"></canvas>
     <div id="app"></div>
 
     <!-- Contact Modal -->
@@ -166,19 +168,7 @@
             <h3 id="modalContactTitle" class="text-2xl font-bold text-slate-800 dark:text-white mb-6 text-center"></h3>
             <div class="space-y-6">
                 <!-- Phone -->
-                <div
-                    class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
-                    <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center"><i
-                            class="fa-solid fa-phone"></i></div>
-                    <div>
-                        <div id="modalPhoneLabel"
-                            class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
-                        </div>
-                        <a href="tel:+491704358307"
-                            class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
-                            dir="ltr">+49 170 4358307</a>
-                    </div>
-                </div>
+
                 <!-- Email -->
                 <div
                     class="flex items-center gap-4 p-4 bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 hover:border-primary/50 transition duration-300">
@@ -190,9 +180,9 @@
                         <div id="modalEmailLabel"
                             class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
                         </div>
-                        <a href="mailto:waheedhotspot@gmail.com" onclick="return confirmEmail(event)"
+                        <a href="mailto:waheedshurbaji@icloud.com" onclick="return confirmEmail(event)"
                             class="text-slate-800 dark:text-white font-medium hover:text-primary transition"
-                            dir="ltr">waheedhotspot@gmail.com</a>
+                            dir="ltr">waheedshurbaji@icloud.com</a>
                     </div>
                 </div>
                 <!-- Address -->
@@ -333,7 +323,7 @@
                 },
                 modal: {
                     contactTitle: "Kontaktdaten",
-                    phone: "Telefon",
+
                     email: "E-Mail",
                     address: "Adresse",
                     close: "Schließen"
@@ -426,7 +416,6 @@
                 },
                 modal: {
                     contactTitle: "Contact Details",
-                    phone: "Phone",
                     email: "E-Mail",
                     address: "Address",
                     close: "Close"
@@ -498,6 +487,7 @@
                 localStorage.setItem('theme', 'dark');
             }
             updateThemeIcon();
+            checkRain();
         }
 
         function updateThemeIcon() {
@@ -505,6 +495,73 @@
             const icon = document.getElementById('themeIcon');
             if (icon) icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
+
+        // --- ASCII Rain Logic ---
+        let rainInterval;
+        const canvas = document.getElementById('ascii-rain');
+        const ctx = canvas.getContext('2d');
+        let drops = [];
+        const fontSize = 14;
+
+        function initRain() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const columns = Math.floor(canvas.width / fontSize);
+            drops = Array(columns).fill(1).map(() => Math.random() * -100); // Start above screen
+        }
+
+        function drawRain() {
+            // Fade out
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                // Random char (Katakana + Latin)
+                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+
+                // RGB Rainbow Effect
+                const r = Math.floor(Math.random() * 255);
+                const g = Math.floor(Math.random() * 255);
+                const b = Math.floor(Math.random() * 255);
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+
+            if (document.documentElement.classList.contains('dark')) {
+                rainInterval = requestAnimationFrame(drawRain);
+            }
+        }
+
+        function checkRain() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const canvas = document.getElementById('ascii-rain');
+
+            if (isDark) {
+                canvas.classList.remove('opacity-0');
+                if (!rainInterval) {
+                    initRain(); // Resize/Reset
+                    drawRain();
+                }
+            } else {
+                canvas.classList.add('opacity-0');
+                if (rainInterval) {
+                    cancelAnimationFrame(rainInterval);
+                    rainInterval = null;
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (document.documentElement.classList.contains('dark')) initRain();
+        });
 
         // --- Modals ---
         function toggleGlobalModal(modalId) {
@@ -517,7 +574,6 @@
                 const t = translations[currentLang].modal;
                 if (modalId === 'contactModal') {
                     document.getElementById('modalContactTitle').innerText = t.contactTitle;
-                    document.getElementById('modalPhoneLabel').innerText = t.phone;
                     document.getElementById('modalEmailLabel').innerText = t.email;
                     document.getElementById('modalAddressLabel').innerText = t.address;
                     document.getElementById('modalCloseBtn').innerText = t.close;
@@ -637,6 +693,8 @@
             const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark' || (!savedTheme && systemDark)) document.documentElement.classList.add('dark');
             else document.documentElement.classList.remove('dark');
+
+            checkRain(); // Init Rain if dark
 
             // Language
             const savedLang = localStorage.getItem('lang');
