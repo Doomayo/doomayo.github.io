@@ -616,8 +616,9 @@
         let codeInterval;
         const codeCanvas = document.getElementById('ascii-rain'); // Reuse existing canvas ID
         const codeCtx = codeCanvas.getContext('2d');
-        const codeFontSize = 16;
-        const lineHeight = 24;
+        let codeFontSize = 16;
+        let lineHeight = 24;
+        let paddingTop = 100; // Lower starting position
         let codeLines = [];
         let maxLines = 0;
         let currentLineIndex = 0;
@@ -678,8 +679,13 @@
         function initCodeRain() {
             codeCanvas.width = window.innerWidth;
             codeCanvas.height = window.innerHeight;
+
+            // Responsive Font Size
+            codeFontSize = window.innerWidth > 768 ? 22 : 14;
+            lineHeight = codeFontSize * 1.5;
+
             codeCtx.font = codeFontSize + 'px monospace';
-            maxLines = Math.floor(codeCanvas.height / lineHeight);
+            maxLines = Math.floor((codeCanvas.height - paddingTop) / lineHeight);
             codeLines = [];
             currentLineIndex = 0;
             charIndex = 0;
@@ -738,9 +744,9 @@
 
             codeCtx.clearRect(0, 0, codeCanvas.width, codeCanvas.height);
 
-            let y = lineHeight;
+            let y = paddingTop + lineHeight;
             for (let i = 0; i < codeLines.length; i++) {
-                let x = 20;
+                let x = window.innerWidth > 768 ? 40 : 20; // More padding on desktop
                 const line = codeLines[i];
                 if (line.content) {
                     for (let j = 0; j < line.content.length; j++) {
@@ -782,7 +788,11 @@
             }
         }
 
+        let lastWidth = window.innerWidth;
         window.addEventListener('resize', () => {
+            if (window.innerWidth === lastWidth) return; // Ignore scroll on mobile (URL bar resize)
+            lastWidth = window.innerWidth;
+
             const isDark = document.documentElement.classList.contains('dark');
             if (isDark) initCodeRain();
             else initNetwork();
