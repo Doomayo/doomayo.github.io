@@ -502,6 +502,8 @@
         const ctx = canvas.getContext('2d');
         let drops = [];
         const fontSize = 14;
+        const rainSpeed = 50; // Delay in ms between frames
+        let lastTime = 0;
 
         function initRain() {
             canvas.width = window.innerWidth;
@@ -510,7 +512,18 @@
             drops = Array(columns).fill(1).map(() => Math.random() * -100); // Start above screen
         }
 
-        function drawRain() {
+        function drawRain(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = timestamp - lastTime;
+
+            if (deltaTime < rainSpeed) {
+                if (document.documentElement.classList.contains('dark')) {
+                    rainInterval = requestAnimationFrame(drawRain);
+                }
+                return;
+            }
+            lastTime = timestamp;
+
             // Fade out
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
