@@ -572,6 +572,27 @@
             }
         }
 
+        function checkRain() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const canvas = document.getElementById('ascii-rain');
+
+            if (isDark) { // Dark Mode
+                canvas.classList.remove('opacity-0');
+                // Restart only if NOT running
+                if (!codeInterval) {
+                    initCodeRain();
+                    drawCodeRain();
+                }
+            } else { // Light Mode
+                canvas.classList.add('opacity-0');
+                if (codeInterval) {
+                    cancelAnimationFrame(codeInterval);
+                    codeInterval = null;
+                }
+            }
+        }
+
+        // Re-add checkNetwork logic (I replaced it by accident in previous chunk, need to be careful)
         function checkNetwork() {
             const isDark = document.documentElement.classList.contains('dark');
             const canvas = document.getElementById('network-effect');
@@ -591,69 +612,179 @@
             }
         }
 
-        function drawRain(timestamp) {
-            if (!lastTime) lastTime = timestamp;
-            const deltaTime = timestamp - lastTime;
+        // --- Code Typing Effect Logic (Dark Mode) ---
+        let codeInterval;
+        const codeCanvas = document.getElementById('ascii-rain'); // Reuse existing canvas ID
+        const codeCtx = codeCanvas.getContext('2d');
+        const codeFontSize = 16;
+        const lineHeight = 24;
+        let codeLines = [];
+        let maxLines = 0;
+        let currentLineIndex = 0;
+        let charIndex = 0;
+        let frameCount = 0; // Speed control
 
-            if (deltaTime < rainSpeed) {
-                if (document.documentElement.classList.contains('dark')) {
-                    rainInterval = requestAnimationFrame(drawRain);
-                }
-                return;
+        // Syntax Colors
+        const colors = {
+            keyword: '#c678dd', // Purple
+            string: '#98c379',  // Green
+            comment: '#5c6370', // Grey
+            func: '#61afef',    // Blue
+            number: '#d19a66',  // Orange
+            default: '#abb2bf'  // White-ish
+        };
+
+        const snippets = [
+            // Python
+            [
+                { t: "import ", c: "keyword" }, { t: "tensorflow ", c: "default" }, { t: "as ", c: "keyword" }, { t: "tf", c: "default" }
+            ],
+            [
+                { t: "def ", c: "keyword" }, { t: "optimize_model", c: "func" }, { t: "(", c: "default" }, { t: "layers", c: "default" }, { t: "):", c: "default" }
+            ],
+            [
+                { t: "    return ", c: "keyword" }, { t: "tf.keras.Sequential", c: "func" }, { t: "(", c: "default" }, { t: "layers", c: "default" }, { t: ")", c: "default" }
+            ],
+            [
+                { t: "# Training loop initialization", c: "comment" }
+            ],
+            [
+                { t: "model", c: "default" }, { t: ".", c: "default" }, { t: "compile", c: "func" }, { t: "(", c: "default" }, { t: "optimizer", c: "default" }, { t: "=", c: "default" }, { t: "'adam'", c: "string" }, { t: ")", c: "default" }
+            ],
+            // Java
+            [
+                { t: "public class ", c: "keyword" }, { t: "DataProcessor ", c: "func" }, { t: "{", c: "default" }
+            ],
+            [
+                { t: "    private static final ", c: "keyword" }, { t: "int ", c: "keyword" }, { t: "MAX_RETRIES ", c: "default" }, { t: "= ", c: "default" }, { t: "5", c: "number" }, { t: ";", c: "default" }
+            ],
+            [
+                { t: "    // Connect to HL7 Interface", c: "comment" }
+            ],
+            [
+                { t: "    public ", c: "keyword" }, { t: "void ", c: "keyword" }, { t: "connect", c: "func" }, { t: "() {", c: "default" }
+            ],
+            [
+                { t: "        System.", c: "default" }, { t: "out", c: "default" }, { t: ".", c: "default" }, { t: "println", c: "func" }, { t: "(", c: "default" }, { t: "\"Connection established...\"", c: "string" }, { t: ");", c: "default" }
+            ],
+            [
+                { t: "    }", c: "default" }
+            ],
+            [
+                { t: "}", c: "default" }
+            ]
+        ];
+
+        function initCodeRain() {
+            codeCanvas.width = window.innerWidth;
+            codeCanvas.height = window.innerHeight;
+            codeCtx.font = codeFontSize + 'px monospace';
+            maxLines = Math.floor(codeCanvas.height / lineHeight);
+            codeLines = [];
+            currentLineIndex = 0;
+            charIndex = 0;
+
+            // Fill with empty lines
+            for (let i = 0; i < maxLines; i++) {
+                codeLines.push({ content: [], complete: true });
             }
-            lastTime = timestamp;
+            startNewLine();
+        }
 
-            // Fade out
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        function startNewLine() {
+            // Scroll logic
+            if (currentLineIndex >= maxLines) {
+                codeLines.shift();
+                codeLines.push({ content: [], complete: false, targetContent: [] });
+                currentLineIndex = maxLines - 1;
+            } else {
+                if (!codeLines[currentLineIndex]) codeLines[currentLineIndex] = { content: [], complete: false, targetContent: [] };
+            }
 
-            ctx.font = fontSize + 'px monospace';
+            const snippet = snippets[Math.floor(Math.random() * snippets.length)];
+            codeLines[currentLineIndex].targetContent = snippet;
+            codeLines[currentLineIndex].content = [];
+            codeLines[currentLineIndex].complete = false;
+            if (!codeLines[currentLineIndex].state) codeLines[currentLineIndex].state = { tokenIdx: 0, charIdx: 0 };
+            else { codeLines[currentLineIndex].state.tokenIdx = 0; codeLines[currentLineIndex].state.charIdx = 0; }
+        }
 
-            for (let i = 0; i < drops.length; i++) {
-                // Random char (Katakana + Latin)
-                const text = String.fromCharCode(0x30A0 + Math.random() * 96);
+        function drawCodeRain() {
+            if (frameCount % 2 === 0) { // Typing speed
+                const currentLine = codeLines[currentLineIndex];
 
-                // RGB Rainbow Effect
-                const r = Math.floor(Math.random() * 255);
-                const g = Math.floor(Math.random() * 255);
-                const b = Math.floor(Math.random() * 255);
-                ctx.fillStyle = `rgb(${r},${g},${b})`;
+                if (currentLine && !currentLine.complete) {
+                    const target = currentLine.targetContent;
+                    const s = currentLine.state;
 
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
+                    if (s.tokenIdx < target.length) {
+                        const token = target[s.tokenIdx];
+                        if (s.charIdx < token.t.length) {
+                            if (!currentLine.content[s.tokenIdx]) currentLine.content[s.tokenIdx] = { t: "", c: token.c };
+                            currentLine.content[s.tokenIdx].t += token.t[s.charIdx];
+                            s.charIdx++;
+                        } else {
+                            s.tokenIdx++;
+                            s.charIdx = 0;
+                        }
+                    } else {
+                        currentLine.complete = true;
+                        currentLineIndex++;
+                        startNewLine();
+                    }
                 }
-                drops[i]++;
+            }
+            frameCount++;
+
+            codeCtx.clearRect(0, 0, codeCanvas.width, codeCanvas.height);
+
+            let y = lineHeight;
+            for (let i = 0; i < codeLines.length; i++) {
+                let x = 20;
+                const line = codeLines[i];
+                if (line.content) {
+                    for (let j = 0; j < line.content.length; j++) {
+                        const token = line.content[j];
+                        codeCtx.fillStyle = colors[token.c] || colors.default;
+                        codeCtx.fillText(token.t, x, y);
+                        x += codeCtx.measureText(token.t).width;
+                    }
+                }
+
+                // Cursor
+                if (i === currentLineIndex && !line.complete && Math.floor(Date.now() / 500) % 2 === 0) {
+                    codeCtx.fillStyle = colors.func;
+                    codeCtx.fillRect(x + 2, y - 12, 8, 16);
+                }
+                y += lineHeight;
             }
 
             if (document.documentElement.classList.contains('dark')) {
-                rainInterval = requestAnimationFrame(drawRain);
+                codeInterval = requestAnimationFrame(drawCodeRain);
             }
         }
-
         function checkRain() {
             const isDark = document.documentElement.classList.contains('dark');
             const canvas = document.getElementById('ascii-rain');
 
             if (isDark) {
                 canvas.classList.remove('opacity-0');
-                if (!rainInterval) {
-                    initRain(); // Resize/Reset
-                    drawRain();
+                if (!codeInterval) {
+                    initCodeRain();
+                    drawCodeRain();
                 }
             } else {
                 canvas.classList.add('opacity-0');
-                if (rainInterval) {
-                    cancelAnimationFrame(rainInterval);
-                    rainInterval = null;
+                if (codeInterval) {
+                    cancelAnimationFrame(codeInterval);
+                    codeInterval = null;
                 }
             }
         }
 
         window.addEventListener('resize', () => {
             const isDark = document.documentElement.classList.contains('dark');
-            if (isDark) initRain();
+            if (isDark) initCodeRain();
             else initNetwork();
         });
 
