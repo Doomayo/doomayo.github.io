@@ -419,7 +419,6 @@
                 { id: "prog", items: ["Python", "Julia", "Java", "C#"], icon: "fa-code" },
                 { id: "imaging", items: ["PyTorch", "DICOM", "CT/MRT Segmentierung"], icon: "fa-brain" },
                 { id: "tools", items: ["Git", "Jupyter", "SQL", "Docker"], icon: "fa-database" },
-                { id: "tools", items: ["Git", "Jupyter", "SQL", "Docker"], icon: "fa-database" },
                 { id: "health", items: ["HL7 v2", "Mirth Connect", "FHIR"], icon: "fa-heart-pulse" },
                 { id: "languages", items: ["Arabic (Mother Tongue)", "English (Fluent)", "German (Fluent)"], icon: "fa-language" }
             ],
@@ -1090,16 +1089,18 @@
             let expListHTML = '<div class="space-y-4">';
             t.experience.jobs.forEach(job => {
                 expListHTML += `
-                    <div class="relative pl-8 border-l-2 border-slate-200 dark:border-white/10 hover:border-primary transition-colors py-2 group">
-                        <div class="absolute -left-[9px] top-3 w-4 h-4 rounded-full bg-white dark:bg-[#050505] border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary"></div>
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                             <h3 class="text-lg font-bold text-slate-800 dark:text-white">${job.role}</h3>
-                             <span class="text-xs font-bold text-white bg-primary px-2 py-1 rounded-full whitespace-nowrap mt-1 sm:mt-0 inline-block">${job.period}</span>
+                    <div class="relative pl-8 border-l-2 border-slate-200 dark:border-white/10 hover:border-primary transition-colors py-4 group">
+                        <div class="absolute -left-[9px] top-8 w-4 h-4 rounded-full bg-white dark:bg-[#050505] border-2 border-slate-300 dark:border-slate-600 group-hover:border-primary"></div>
+                        <div class="bg-white dark:bg-[#111] p-6 rounded-2xl border border-slate-200 dark:border-white/5 shadow-sm group-hover:border-primary/50 transition duration-300">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+                                 <h3 class="text-lg font-bold text-slate-800 dark:text-white">${job.role}</h3>
+                                 <span class="text-xs font-bold text-white bg-primary px-2 py-1 rounded-full whitespace-nowrap mt-1 sm:mt-0 inline-block">${job.period}</span>
+                            </div>
+                            <div class="text-light-secondary dark:text-secondary font-medium text-sm mb-3">${job.company}</div>
+                            <ul class="list-disc ml-4 rtl:ml-0 rtl:mr-4 text-slate-600 dark:text-slate-400 text-sm space-y-1 leading-relaxed">
+                                ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
                         </div>
-                        <div class="text-light-secondary dark:text-secondary font-medium text-sm mb-3">${job.company}</div>
-                        <ul class="list-disc ml-4 rtl:ml-0 rtl:mr-4 text-slate-600 dark:text-slate-400 text-sm space-y-1 leading-relaxed">
-                            ${job.details.map(d => `<li>${d}</li>`).join('')}
-                        </ul>
                     </div>
                 `;
             });
