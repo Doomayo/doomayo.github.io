@@ -1133,7 +1133,10 @@
             `;
 
             const footerHTML = `
-                <footer class="text-center py-10 text-slate-500 text-sm bg-slate-100 dark:bg-black border-t border-slate-200 dark:border-white/5 mt-12 relative overflow-hidden">
+                <footer class="text-center py-10 text-slate-500 text-sm bg-slate-100 dark:bg-black border-t border-slate-200 dark:border-white/5 mt-12 relative overflow-hidden flex flex-col items-center">
+                    <div class="relative z-10 mb-6">
+                        <a href="https://www.checkdomain.de/unternehmen/garantie/ssl/popup/" onclick="window.open(this.href + '?host=' + window.location.host,'','height=600,width=560,scrollbars=yes'); return false;"><img src="https://www.checkdomain.de/assets/bundles/web/app/widget/seal/img/ssl_certificate/de/150x150.png?20260520-124251" alt="SSL-Zertifikat" class="w-24 h-auto" /></a>
+                    </div>
                     <div class="relative z-10">&copy; 2025 Waheed Abdulbaki Shurbaji</div>
                     <div class="hidden dark:block absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-32 bg-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
                 </footer>
